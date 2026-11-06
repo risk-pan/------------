@@ -26,6 +26,7 @@ int main()
         cout << "3. 查询设备\n";
         cout << "4. 打开设备\n";
         cout << "5. 关闭设备\n";
+        cout << "6. 修改设备信息\n";
         cout << "0. 退出系统\n";
         cout << "请选择：";
 
@@ -128,16 +129,58 @@ int main()
             else if (choice == "4")
             {
                 devices[index].turnOn();
-                cout << "设备已开启！\n";
                 devices[index].display();
             }
             else
             {
                 devices[index].turnOff();
-                cout << "设备已关闭！\n";
                 devices[index].display();
             }
         }
+
+        else if (choice == "6")
+        {
+            string deviceId;
+            string newName;
+            string newRoom;
+
+            cout << "请输入要修改的设备编号：";
+            getline(cin, deviceId);
+
+            int index = -1;
+
+            for (int i = 0; i < count; i++)
+            {
+                if (devices[i].getId() == deviceId)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index == -1)
+            {
+                cout << "未找到该设备！" << endl;
+            }
+            else
+            {
+                cout << "请输入新的设备名称：";
+                getline(cin, newName);
+
+                cout << "请输入新的房间名称：";
+                getline(cin, newRoom);
+
+                if (newName.empty() || newRoom.empty())
+                {
+                    cout << "名称和房间不能为空！" << endl;
+                }
+                else
+                {
+                    devices[index].changeInfo(newName, newRoom);
+                }
+            }
+        }
+
         else if (choice == "0")
         {
             cout << "系统已退出。\n";
